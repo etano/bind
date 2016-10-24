@@ -77,7 +77,7 @@
 #ifndef BIND_UTILS_INDEX_SEQUENCE
 #define BIND_UTILS_INDEX_SEQUENCE
 
-namespace bind {
+namespace bindxx {
 
     template<size_t... Indices>
     struct index_sequence {
@@ -105,7 +105,7 @@ namespace bind {
 #ifndef BIND_UTILS_IO
 #define BIND_UTILS_IO
 
-namespace bind { namespace utils {
+namespace bindxx { namespace utils {
 
     class funneled_io {
     public:
@@ -134,7 +134,7 @@ namespace bind { namespace utils {
 #ifndef BIND_UTILS_GUARD
 #define BIND_UTILS_GUARD
 
-namespace bind { 
+namespace bindxx { 
 
     class guard_once {
     public:
@@ -150,7 +150,7 @@ namespace bind {
 #ifndef BIND_UTILS_RANK_T
 #define BIND_UTILS_RANK_T
 
-namespace bind {
+namespace bindxx {
     #if 0
     class rank_t {
     public:
@@ -175,7 +175,7 @@ namespace bind {
 #ifndef BIND_MEMORY_TYPES
 #define BIND_MEMORY_TYPES
 
-namespace bind { namespace memory {
+namespace bindxx { namespace memory {
     // {{{ types lookup detail
     namespace detail {
         template<int N, int Limit>
@@ -234,7 +234,7 @@ namespace bind { namespace memory {
 #ifndef BIND_MEMORY_FACTORY
 #define BIND_MEMORY_FACTORY
 
-namespace bind { namespace memory {
+namespace bindxx { namespace memory {
 
     template<size_t S>
     class private_factory {
@@ -274,7 +274,7 @@ namespace bind { namespace memory {
 #ifndef BIND_MEMORY_REGION
 #define BIND_MEMORY_REGION
 
-namespace bind { namespace memory {
+namespace bindxx { namespace memory {
 
     constexpr size_t aligned_64(size_t size){ return 64 * (size_t)((size+63)/64); }
     template<size_t S> constexpr size_t aligned_64(){ return 64 * (size_t)((S+63)/64); }
@@ -337,7 +337,7 @@ namespace bind { namespace memory {
 #define BIND_INSTR_BULK_CHUNK 16777216 // 16 MB
 #endif
 
-namespace bind { namespace memory { namespace cpu {
+namespace bindxx { namespace memory { namespace cpu {
 
     struct bulk {
         static constexpr int type = types::cpu::bulk;
@@ -354,14 +354,14 @@ namespace bind { namespace memory { namespace cpu {
 #ifndef BIND_MEMORY_CPU_INSTR_BULK
 #define BIND_MEMORY_CPU_INSTR_BULK
 
-namespace bind { namespace memory { namespace cpu {
+namespace bindxx { namespace memory { namespace cpu {
 
     struct instr_bulk {
         template<class T>
         class allocator {
         public:
             typedef T value_type;
-            template <class U> struct rebind { typedef allocator<U> other; };
+            template <class U> struct rebindxx { typedef allocator<U> other; };
             allocator() throw() { }
             allocator(const allocator&) throw() { }
             template<typename U> allocator(const allocator<U>&) throw() { }
@@ -399,7 +399,7 @@ namespace bind { namespace memory { namespace cpu {
 #ifndef BIND_MEMORY_CPU_STANDARD
 #define BIND_MEMORY_CPU_STANDARD
 
-namespace bind { namespace memory { namespace cpu {
+namespace bindxx { namespace memory { namespace cpu {
 
     struct standard {
         static constexpr int type = types::cpu::standard;
@@ -420,7 +420,7 @@ namespace bind { namespace memory { namespace cpu {
 #ifndef BIND_MEMORY_CPU_NEW
 #define BIND_MEMORY_CPU_NEW
 
-namespace bind { namespace memory { namespace cpu {
+namespace bindxx { namespace memory { namespace cpu {
 
     template<class T>
     class use_fixed_new {
@@ -446,7 +446,7 @@ namespace bind { namespace memory { namespace cpu {
 #ifndef BIND_MEMORY_GPU_PINNED
 #define BIND_MEMORY_GPU_PINNED
 
-namespace bind { namespace memory { namespace gpu {
+namespace bindxx { namespace memory { namespace gpu {
 
     struct pinned {
 	static constexpr int type = types::gpu::pinned;
@@ -467,7 +467,7 @@ namespace bind { namespace memory { namespace gpu {
 #ifndef BIND_MEMORY_GPU_STANDARD
 #define BIND_MEMORY_GPU_STANDARD
 
-namespace bind { namespace memory { namespace gpu {
+namespace bindxx { namespace memory { namespace gpu {
 
     struct standard {
         static constexpr int type = types::gpu::standard;
@@ -490,7 +490,7 @@ namespace bind { namespace memory { namespace gpu {
 #ifndef BIND_MEMORY_DESCRIPTOR
 #define BIND_MEMORY_DESCRIPTOR
 
-namespace bind { namespace memory {
+namespace bindxx { namespace memory {
 
     template<class MemoryTypes>
     struct hub;
@@ -551,7 +551,7 @@ namespace bind { namespace memory {
 #ifndef BIND_MEMORY_HUB
 #define BIND_MEMORY_HUB
 
-namespace bind { namespace memory {
+namespace bindxx { namespace memory {
 
     template<class MemoryTypes>
     struct hub {
@@ -610,7 +610,7 @@ namespace bind { namespace memory {
 #ifndef BIND_MODEL_DEVICE
 #define BIND_MODEL_DEVICE
 
-namespace bind {
+namespace bindxx {
     enum class device { cpu, gpu, any };
 
     template<device D>
@@ -629,7 +629,7 @@ namespace bind {
 #ifndef BIND_MODEL_LOCALITY
 #define BIND_MODEL_LOCALITY
 
-namespace bind {
+namespace bindxx {
     enum class locality { remote, local, common };
 }
 
@@ -638,7 +638,7 @@ namespace bind {
 #ifndef BIND_MODEL_FUNCTOR
 #define BIND_MODEL_FUNCTOR
 
-namespace bind { namespace model {
+namespace bindxx { namespace model {
     
     class functor {
         typedef memory::cpu::instr_bulk::allocator<functor*> allocator_type;
@@ -657,7 +657,7 @@ namespace bind { namespace model {
 #ifndef BIND_MODEL_REVISION
 #define BIND_MODEL_REVISION
 
-namespace bind { namespace model {
+namespace bindxx { namespace model {
 
     class revision : public memory::cpu::use_fixed_new<revision> {
     public:
@@ -751,7 +751,7 @@ namespace bind { namespace model {
 #define BIND_MODEL_HISTORY
 
 // revision tracking mechanism (target selector)
-namespace bind { namespace model {
+namespace bindxx { namespace model {
 
     class history : public memory::cpu::use_fixed_new<history> {
     public:
@@ -784,7 +784,7 @@ namespace bind { namespace model {
 #ifndef BIND_MODEL_ANY
 #define BIND_MODEL_ANY
 
-namespace bind { namespace model {
+namespace bindxx { namespace model {
 
     template<typename T>
     constexpr size_t sizeof_any(){
@@ -820,7 +820,7 @@ namespace bind { namespace model {
 #ifndef BIND_TRANSPORT_MPI_GROUP
 #define BIND_TRANSPORT_MPI_GROUP
 
-namespace bind { namespace transport { namespace mpi {
+namespace bindxx { namespace transport { namespace mpi {
 
     struct group {
         group(MPI_Comm parent) : mpi_comm(parent)
@@ -844,7 +844,7 @@ namespace bind { namespace transport { namespace mpi {
 
 #define BOUNDARY_OVERFLOW -1
 
-namespace bind {
+namespace bindxx {
 
     template<typename T>
     class binary_tree {
@@ -897,7 +897,7 @@ namespace bind {
 #ifndef BIND_TRANSPORT_MPI_CHANNEL_H
 #define BIND_TRANSPORT_MPI_CHANNEL_H
 
-namespace bind { namespace transport { namespace mpi {
+namespace bindxx { namespace transport { namespace mpi {
 
     class request_impl;
     template<class T> class collective;
@@ -944,7 +944,7 @@ namespace bind { namespace transport { namespace mpi {
 #ifndef BIND_TRANSPORT_MPI_REQUEST_H
 #define BIND_TRANSPORT_MPI_REQUEST_H
 
-namespace bind { namespace transport { namespace mpi {
+namespace bindxx { namespace transport { namespace mpi {
 
     class request_impl : public memory::cpu::use_bulk_new<request_impl> {
     public:
@@ -978,7 +978,7 @@ namespace bind { namespace transport { namespace mpi {
 #ifndef BIND_TRANSPORT_MPI_COLLECTIVE_H
 #define BIND_TRANSPORT_MPI_COLLECTIVE_H
 
-namespace bind { namespace transport { namespace mpi {
+namespace bindxx { namespace transport { namespace mpi {
 
     template<typename T>
     class bcast {
@@ -1029,7 +1029,7 @@ namespace bind { namespace transport { namespace mpi {
 #ifndef BIND_TRANSPORT_MPI_REQUEST_HPP
 #define BIND_TRANSPORT_MPI_REQUEST_HPP
 
-namespace bind { namespace transport { namespace mpi {
+namespace bindxx { namespace transport { namespace mpi {
 
     // type information required //
     inline request_impl::request_impl(void(*impl)(request_impl*), typename channel::scalar_type& v, rank_t target, int tag)
@@ -1082,7 +1082,7 @@ namespace bind { namespace transport { namespace mpi {
 #ifndef BIND_TRANSPORT_MPI_CHANNEL_HPP
 #define BIND_TRANSPORT_MPI_CHANNEL_HPP
 
-namespace bind { namespace transport { namespace mpi {
+namespace bindxx { namespace transport { namespace mpi {
 
     inline void recv_impl(request_impl* r){
         MPI_Irecv(r->data, r->extent, MPI_DOUBLE, r->target, r->tag, MPI_COMM_WORLD, &r->mpi_request);
@@ -1157,7 +1157,7 @@ namespace bind { namespace transport { namespace mpi {
 
 #define BOUNDARY_OVERFLOW -1
 
-namespace bind { namespace transport { namespace mpi {
+namespace bindxx { namespace transport { namespace mpi {
 
     namespace detail {
         inline int self(){
@@ -1252,7 +1252,7 @@ namespace bind { namespace transport { namespace mpi {
 #ifndef BIND_TRANSPORT_NOP
 #define BIND_TRANSPORT_NOP
 
-namespace bind { namespace transport { namespace nop {
+namespace bindxx { namespace transport { namespace nop {
 
     template<class T> struct collective {
         bool test(){ return true; }
@@ -1285,7 +1285,7 @@ namespace bind { namespace transport { namespace nop {
 
 #define NSTREAMS 16
 
-namespace bind { namespace transport { namespace cuda {
+namespace bindxx { namespace transport { namespace cuda {
 
     inline cudaError_t checkCuda(cudaError_t result){
         if(result != cudaSuccess) throw std::runtime_error("Error: CUDA transport failure");
@@ -1324,7 +1324,7 @@ namespace bind { namespace transport { namespace cuda {
 #ifndef BIND_CORE_COLLECTOR
 #define BIND_CORE_COLLECTOR
 
-namespace bind{ namespace core {
+namespace bindxx{ namespace core {
 
     using model::revision;
     using model::any;
@@ -1362,7 +1362,7 @@ namespace bind{ namespace core {
 #ifndef BIND_CORE_NODE_H
 #define BIND_CORE_NODE_H
 
-namespace bind {
+namespace bindxx {
 
     namespace core {
         class controller;
@@ -1400,7 +1400,7 @@ namespace bind {
 #ifndef BIND_CORE_CONTROLLER_H
 #define BIND_CORE_CONTROLLER_H
 
-namespace bind { namespace core {
+namespace bindxx { namespace core {
 
     using model::history;
     using model::revision;
@@ -1462,12 +1462,12 @@ namespace bind { namespace core {
     
 } }
 
-namespace bind {
+namespace bindxx {
     template<class T> core::controller core::controller::weak_instance<T>::w;
     inline core::controller& select(){ return core::controller::weak_instance<void>::w; }
 }
 
-namespace bind { namespace nodes {
+namespace bindxx { namespace nodes {
     inline size_t size(){
         return select().nodes.size();
     }
@@ -1496,7 +1496,7 @@ namespace bind { namespace nodes {
 #ifndef BIND_TRANSPORT_CUDA_TRANSFER_H
 #define BIND_TRANSPORT_CUDA_TRANSFER_H
 
-namespace bind { namespace transport { namespace cuda {
+namespace bindxx { namespace transport { namespace cuda {
     using model::functor;
     using model::revision;
 
@@ -1518,7 +1518,7 @@ namespace bind { namespace transport { namespace cuda {
 #ifndef BIND_TRANSPORT_CUDA_TRANSFER_HPP
 #define BIND_TRANSPORT_CUDA_TRANSFER_HPP
 
-namespace bind { namespace transport { namespace cuda {
+namespace bindxx { namespace transport { namespace cuda {
 
     namespace detail {
         template<device From, device To>
@@ -1551,15 +1551,15 @@ namespace bind { namespace transport { namespace cuda {
         r.use(); s.use();
         s.embed(s.spec.hard_malloc<typename detail::transfer_impl<From, To>::memory_type>());
         if(r.generator != NULL) (r.generator.load())->queue(this);
-        else bind::select().queue(this);
+        else bindxx::select().queue(this);
     }
 
     template<device From, device To>
     void transfer<From, To>::invoke(){
         detail::transfer_impl<From, To>::invoke(s.data, r.data, r.spec.extent);
 
-        bind::select().squeeze(&r); r.release();
-        bind::select().squeeze(&s); s.release();
+        bindxx::select().squeeze(&r); r.release();
+        bindxx::select().squeeze(&s); s.release();
         s.complete();
     }
 
@@ -1576,7 +1576,7 @@ namespace bind { namespace transport { namespace cuda {
 #ifndef BIND_CORE_GET_H
 #define BIND_CORE_GET_H
 
-namespace bind { namespace core {
+namespace bindxx { namespace core {
     
     template<class T> class get {};
 
@@ -1616,15 +1616,15 @@ namespace bind { namespace core {
 #ifndef BIND_CORE_GET_HPP
 #define BIND_CORE_GET_HPP
 
-namespace bind { namespace core {
+namespace bindxx { namespace core {
 
     // {{{ any
 
     inline void get<any>::spawn(any& t){
-        bind::select().queue(new get(t));
+        bindxx::select().queue(new get(t));
     }
     inline get<any>::get(any& ptr) : t(ptr) {
-        handle = bind::select().get_channel().bcast(t, bind::nodes::which_());
+        handle = bindxx::select().get_channel().bcast(t, bindxx::nodes::which_());
         t.generator = this;
     }
     inline bool get<any>::ready(){
@@ -1639,11 +1639,11 @@ namespace bind { namespace core {
 
     inline void get<revision>::spawn(revision& r){
         get*& transfer = (get*&)r.assist.second;
-        if(bind::select().update(r)) transfer = new get(r);
-        *transfer += bind::nodes::which_();
+        if(bindxx::select().update(r)) transfer = new get(r);
+        *transfer += bindxx::nodes::which_();
     }
     inline get<revision>::get(revision& r) : t(r) {
-        handle = bind::select().get_channel().get(t);
+        handle = bindxx::select().get_channel().get(t);
         t.invalidate();
     }
     inline void get<revision>::operator += (rank_t rank){
@@ -1652,14 +1652,14 @@ namespace bind { namespace core {
             t.use();
             t.generator = this;
             t.embed(t.spec.hard_malloc<memory::cpu::standard>()); 
-            bind::select().queue(this);
+            bindxx::select().queue(this);
         }
     }
     inline bool get<revision>::ready(){
         return handle->test();
     }
     inline void get<revision>::invoke(){
-        bind::select().squeeze(&t);
+        bindxx::select().squeeze(&t);
         t.release();
         t.complete();
     }
@@ -1673,7 +1673,7 @@ namespace bind { namespace core {
 #ifndef BIND_CORE_SET_H
 #define BIND_CORE_SET_H
 
-namespace bind { namespace core {
+namespace bindxx { namespace core {
 
     template<class T> class set {};
 
@@ -1712,7 +1712,7 @@ namespace bind { namespace core {
 #ifndef BIND_CORE_SET_HPP
 #define BIND_CORE_SET_HPP
 
-namespace bind { namespace core {
+namespace bindxx { namespace core {
 
     // {{{ any
 
@@ -1720,7 +1720,7 @@ namespace bind { namespace core {
         (t.generator.load())->queue(new set(t));
     }
     inline set<any>::set(any& t) : t(t) {
-        handle = bind::select().get_channel().bcast(t, bind::nodes::which_());
+        handle = bindxx::select().get_channel().bcast(t, bindxx::nodes::which_());
     }
     inline bool set<any>::ready(){
         return (t.generator != NULL ? false : handle->test());
@@ -1732,14 +1732,14 @@ namespace bind { namespace core {
 
     inline void set<revision>::spawn(revision& r){
         set*& transfer = (set*&)r.assist.second;
-        if(bind::select().update(r)) transfer = new set(r);
-        *transfer += bind::nodes::which_();
+        if(bindxx::select().update(r)) transfer = new set(r);
+        *transfer += bindxx::nodes::which_();
     }
     inline set<revision>::set(revision& r) : t(r) {
         t.use();
-        handle = bind::select().get_channel().set(t);
+        handle = bindxx::select().get_channel().set(t);
         if(t.generator != NULL) (t.generator.load())->queue(this);
-        else bind::select().queue(this);
+        else bindxx::select().queue(this);
     }
     inline void set<revision>::operator += (rank_t rank){
         handle->append(rank);
@@ -1748,7 +1748,7 @@ namespace bind { namespace core {
         return (t.generator != NULL ? false : handle->test());
     }
     inline void set<revision>::invoke(){
-        bind::select().squeeze(&t);
+        bindxx::select().squeeze(&t);
         t.release(); 
     }
 
@@ -1761,7 +1761,7 @@ namespace bind { namespace core {
 #ifndef BIND_CORE_HUB
 #define BIND_CORE_HUB
 
-namespace bind { namespace transport {
+namespace bindxx { namespace transport {
     using model::revision;
     using model::any;
 
@@ -1772,7 +1772,7 @@ namespace bind { namespace transport {
     template<device D>
     struct hub<any, D, locality::local> {
         static void sync(any* v){
-            if(bind::nodes::size() == 1) return;
+            if(bindxx::nodes::size() == 1) return;
             core::set<any>::spawn(*v);
         }
     };
@@ -1787,7 +1787,7 @@ namespace bind { namespace transport {
     template<>
     struct hub_mpi<locality::common> {
         static void sync(revision* r){
-            if(bind::nodes::size() == 1) return; // serial
+            if(bindxx::nodes::size() == 1) return; // serial
             if(model::common(r)) return;
             if(model::local(r)) core::set<revision>::spawn(*r);
             else core::get<revision>::spawn(*r);
@@ -1802,7 +1802,7 @@ namespace bind { namespace transport {
     template<>
     struct hub_mpi<locality::remote> {
         static void sync(revision* r){
-            if(r->owner == bind::nodes::which_() || model::common(r)) return;
+            if(r->owner == bindxx::nodes::which_() || model::common(r)) return;
             if(model::local(r)) core::set<revision>::spawn(*r);
             else core::get<revision>::spawn(*r); // assist
         }
@@ -1904,7 +1904,7 @@ namespace bind { namespace transport {
 #ifndef BIND_CORE_CONTROLLER_HPP
 #define BIND_CORE_CONTROLLER_HPP
 
-namespace bind { namespace core {
+namespace bindxx { namespace core {
 
     inline controller::~controller(){ 
         if(!chains->empty()) printf("Bind:: exiting with operations still in queue!\n");
@@ -2033,7 +2033,7 @@ namespace bind { namespace core {
 #ifndef BIND_CORE_NODE_HPP
 #define BIND_CORE_NODE_HPP
 
-namespace bind {
+namespace bindxx {
 
     // {{{ lambda interface shortcut
 
@@ -2042,11 +2042,11 @@ namespace bind {
 
     template<class... Args>
     void node::cpu(Args&& ... args) const {
-        bind::cpu(std::forward<Args>(args)...);
+        bindxx::cpu(std::forward<Args>(args)...);
     }
     template<class... Args>
     void node::gpu(Args&& ... args) const {
-        bind::gpu(std::forward<Args>(args)...);
+        bindxx::gpu(std::forward<Args>(args)...);
     }
 
     // }}}
@@ -2054,10 +2054,10 @@ namespace bind {
 
     inline node::~node(){
         if(!controller) return;
-        bind::select().deactivate(this);
+        bindxx::select().deactivate(this);
     }
     inline node::node(const rank_t r){
-        if(! (controller = bind::select().activate(this)) ) return;
+        if(! (controller = bindxx::select().activate(this)) ) return;
         this->state = (r == controller->get_rank()) ? locality::local : locality::remote;
         this->rank = r;
     }
@@ -2096,14 +2096,14 @@ namespace bind {
 #ifndef BIND_INTERFACE_SHORTCUTS
 #define BIND_INTERFACE_SHORTCUTS
 
-namespace bind {
+namespace bindxx {
 
     inline void sync(){
-        bind::select().sync();
+        bindxx::select().sync();
     }
 
     inline int num_procs(){
-        return bind::select().get_num_procs();
+        return bindxx::select().get_num_procs();
     }
 
     inline int num_threads(){
@@ -2111,16 +2111,16 @@ namespace bind {
     }
 
     inline rank_t rank(){
-        return bind::select().get_rank();
+        return bindxx::select().get_rank();
     }
 
     template<typename T>
     inline void collect(T* o){
-        bind::select().collect(o); 
+        bindxx::select().collect(o); 
     }
 
     inline void collect(model::revision* r, model::revision*& s){
-        bind::select().collect(r, s);
+        bindxx::select().collect(r, s);
     }
 
     template<typename V>
@@ -2142,7 +2142,7 @@ namespace bind {
 
 #define EXTRACT(var) T& var = *(T*)m->arguments[Arg];
 
-namespace bind {
+namespace bindxx {
     using model::functor;
 
     template <typename T, bool Compact = false>
@@ -2178,7 +2178,7 @@ namespace bind {
 
 #define EXTRACT(var) T& var = *(T*)m->arguments[Arg];
 
-namespace bind {
+namespace bindxx {
     using model::functor;
 
     template <typename T>
@@ -2210,14 +2210,14 @@ namespace bind {
         }
         template<size_t Arg> static void apply_remote(T& o){
             o.resit();
-            bind::select().sync<locality::remote, device::cpu>(o.impl);
+            bindxx::select().sync<locality::remote, device::cpu>(o.impl);
         }
         template<size_t Arg> static void apply_local(T& o, functor* m){
             if(o.impl->generator != m){
                 o.resit();
                 o.impl->generator = m;
             }
-            bind::select().sync<locality::local, device::cpu>(o.impl);
+            bindxx::select().sync<locality::local, device::cpu>(o.impl);
             m->arguments[Arg] = memory::cpu::instr_bulk::malloc<sizeof(T)>(); memcpy(m->arguments[Arg], &o, sizeof(T)); 
         }
         template<size_t Arg> static void apply_common(T& o, functor* m){
@@ -2256,7 +2256,7 @@ namespace bind {
 
 #define EXTRACT(var) T& var = *(T*)m->arguments[Arg];
 
-namespace bind {
+namespace bindxx {
     using model::functor;
     template <device D, typename T> struct modifier;
 
@@ -2308,7 +2308,7 @@ namespace bind {
 
 #define EXTRACT(var) T& var = *(T*)m->arguments[Arg];
 
-namespace bind {
+namespace bindxx {
     using model::functor;
     using model::revision;
 
@@ -2335,34 +2335,34 @@ namespace bind {
             revision& current = *o.allocator_.after;
             current.complete();
             current.release();
-            bind::select().squeeze(&parent);
+            bindxx::select().squeeze(&parent);
             parent.release();
         }
         template<locality L, size_t Arg>
         static void apply_(T& obj, functor* m){
             auto o = obj.allocator_.desc;
-            bind::select().touch<D>(o, bind::rank());
+            bindxx::select().touch<D>(o, bindxx::rank());
             T* var = (T*)memory::cpu::instr_bulk::malloc<sizeof(T)>(); memcpy((void*)var, &obj, sizeof(T)); 
             m->arguments[Arg] = (void*)var;
             if(o->current->generator != m)
-                bind::select().sync<L,D>(o->current, o->shadow);
-            bind::select().use_revision(o);
+                bindxx::select().sync<L,D>(o->current, o->shadow);
+            bindxx::select().use_revision(o);
 
             var->allocator_.before = o->current;
             if(o->current->generator != m){
-                bind::select().collect(o->current, o->shadow);
-                bind::select().add_revision<L, D>(o, m, bind::rank());
+                bindxx::select().collect(o->current, o->shadow);
+                bindxx::select().add_revision<L, D>(o, m, bindxx::rank());
             }
-            bind::select().use_revision(o);
+            bindxx::select().use_revision(o);
             var->allocator_.after = obj.allocator_.after = o->current;
         }
         template<size_t Arg>
         static void apply_remote(T& obj){
             auto o = obj.allocator_.desc;
-            bind::select().touch<D>(o, bind::rank());
-            bind::select().sync<locality::remote, D>(o->current, o->shadow);
-            bind::select().collect(o->current, o->shadow);
-            bind::select().add_revision<locality::remote, D>(o, NULL, bind::nodes::which_()); 
+            bindxx::select().touch<D>(o, bindxx::rank());
+            bindxx::select().sync<locality::remote, D>(o->current, o->shadow);
+            bindxx::select().collect(o->current, o->shadow);
+            bindxx::select().add_revision<locality::remote, D>(o, NULL, bindxx::nodes::which_()); 
         }
         template<size_t Arg>
         static void apply_local(T& obj, functor* m){
@@ -2407,7 +2407,7 @@ namespace bind {
         }
         static void deallocate_(T& o){
             revision& r = *o.allocator_.before;
-            bind::select().squeeze(&r);
+            bindxx::select().squeeze(&r);
             r.release();
         }
         template<size_t Arg>
@@ -2420,17 +2420,17 @@ namespace bind {
         }
         template<locality L, size_t Arg> static void apply_(T& obj, functor* m){
             auto o = obj.allocator_.desc;
-            bind::select().touch<D>(o, bind::rank());
+            bindxx::select().touch<D>(o, bindxx::rank());
             T* var = (T*)memory::cpu::instr_bulk::malloc<sizeof(T)>(); memcpy((void*)var, &obj, sizeof(T)); m->arguments[Arg] = (void*)var;
             if(o->current->generator != m)
-                bind::select().sync<L,D>(o->current, o->shadow);
-            bind::select().use_revision(o);
+                bindxx::select().sync<L,D>(o->current, o->shadow);
+            bindxx::select().use_revision(o);
             var->allocator_.before = var->allocator_.after = o->current;
         }
         template<size_t Arg> static void apply_remote(T& obj){
             auto o = obj.allocator_.desc;
-            bind::select().touch<D>(o, bind::rank());
-            bind::select().sync<locality::remote,D>(o->current, o->shadow);
+            bindxx::select().touch<D>(o, bindxx::rank());
+            bindxx::select().sync<locality::remote,D>(o->current, o->shadow);
         }
         template<size_t Arg> static void apply_local(T& obj, functor* m){
             apply_<locality::local, Arg>(obj, m);
@@ -2454,23 +2454,23 @@ namespace bind {
         }
         template<locality L, size_t Arg> static void apply_(T& obj, functor* m){
             auto o = obj.allocator_.desc;
-            bind::select().touch<D>(o, bind::rank());
+            bindxx::select().touch<D>(o, bindxx::rank());
             T* var = (T*)memory::cpu::instr_bulk::malloc<sizeof(T)>(); memcpy((void*)var, (void*)&obj, sizeof(T)); m->arguments[Arg] = (void*)var;
-            bind::select().use_revision(o);
+            bindxx::select().use_revision(o);
 
             var->allocator_.before = o->current;
             if(o->current->generator != m){
-                bind::select().collect(o->current, o->shadow);
-                bind::select().add_revision<L, D>(o, m, bind::rank()); 
+                bindxx::select().collect(o->current, o->shadow);
+                bindxx::select().add_revision<L, D>(o, m, bindxx::rank()); 
             }
-            bind::select().use_revision(o);
+            bindxx::select().use_revision(o);
             var->allocator_.after = obj.allocator_.after = o->current;
         }
         template<size_t Arg> static void apply_remote(T& obj){
             auto o = obj.allocator_.desc;
-            bind::select().touch<D>(o, bind::rank());
-            bind::select().collect(o->current, o->shadow);
-            bind::select().add_revision<locality::remote, D>(o, NULL, bind::nodes::which_()); 
+            bindxx::select().touch<D>(o, bindxx::rank());
+            bindxx::select().collect(o->current, o->shadow);
+            bindxx::select().add_revision<locality::remote, D>(o, NULL, bindxx::nodes::which_()); 
         }
         template<size_t Arg> static void apply_local(T& obj, functor* m){
             apply_<locality::local, Arg>(obj, m);
@@ -2492,13 +2492,13 @@ namespace bind {
 #ifndef BIND_INTERFACE_MODIFIERS_DISPATCH
 #define BIND_INTERFACE_MODIFIERS_DISPATCH
 
-namespace bind {
+namespace bindxx {
     namespace detail {
         template<typename T>
         constexpr bool compact(){ return sizeof(T) <= sizeof(void*); }
 
         template <typename T> struct has_versioning {
-            template <typename T1> static typename T1::allocator_type::bind_type test(int);
+            template <typename T1> static typename T1::allocator_type::bindxx_type test(int);
             template <typename> static void test(...);
             enum { value = !std::is_void<decltype(test<T>(0))>::value };
         };
@@ -2543,26 +2543,26 @@ namespace bind {
 #ifndef BIND_INTERFACE_SNAPSHOT
 #define BIND_INTERFACE_SNAPSHOT
 
-namespace bind {
+namespace bindxx {
 
     using model::revision;
 
     struct snapshot {
-        typedef model::history bind_type;
+        typedef model::history bindxx_type;
 
         snapshot& operator=(const snapshot&) = delete;
         snapshot(){ } // should be deleted
         snapshot(size_t size){
-            desc = new bind_type(size);
+            desc = new bindxx_type(size);
         }
         snapshot(const snapshot& origin){
-            desc = new bind_type(origin.desc->extent);
+            desc = new bindxx_type(origin.desc->extent);
             revision* r = origin.desc->back(); if(!r) return;
             desc->current = r;
             r->protect();
         }
        ~snapshot(){
-            if(!desc->weak()) bind::collect(desc->current, desc->shadow);
+            if(!desc->weak()) bindxx::collect(desc->current, desc->shadow);
             delete desc;
         }
         void* data() volatile {
@@ -2570,7 +2570,7 @@ namespace bind {
         }
         revision* before = NULL;
         revision* after = NULL;
-        bind_type* desc;
+        bindxx_type* desc;
     };
 }
 
@@ -2579,7 +2579,7 @@ namespace bind {
 #ifndef BIND_INTERFACE_KERNEL_INLINER
 #define BIND_INTERFACE_KERNEL_INLINER
 
-namespace bind {
+namespace bindxx {
     using model::functor;
 
     template<device D, typename T>
@@ -2652,12 +2652,12 @@ namespace bind {
 
         static inline void latch(functor* o, TF&... args){
             #ifndef BIND_TRANSPORT_NOP
-            if(bind::select().get_node().remote())   { expand_modify_remote<D, 0>(args...); return; }
-            else if(bind::select().get_node().local()) expand_modify_local<D, 0>(o, args...);
+            if(bindxx::select().get_node().remote())   { expand_modify_remote<D, 0>(args...); return; }
+            else if(bindxx::select().get_node().local()) expand_modify_local<D, 0>(o, args...);
             else
             #endif
             expand_modify_common<D, 0>(o, args...);
-            expand_pin<D, 0, TF...>(o) || bind::select().queue(o);
+            expand_pin<D, 0, TF...>(o) || bindxx::select().queue(o);
         }
         static inline void cleanup(functor* o){
             expand_deallocate<D, 0, TF...>(o);
@@ -2683,7 +2683,7 @@ namespace bind {
 #ifndef BIND_INTERFACE_KERNEL
 #define BIND_INTERFACE_KERNEL
 
-namespace bind {
+namespace bindxx {
 
     using model::functor;
 
@@ -2719,7 +2719,7 @@ namespace bind {
 #ifndef BIND_INTERFACE_LAMBDA
 #define BIND_INTERFACE_LAMBDA
 
-namespace bind {
+namespace bindxx {
 
     template<device D, bool Capture, typename F, typename... T>
     struct lambda_kernel : public kernel<D, lambda_kernel<D, Capture, F, T...> > {
@@ -2812,7 +2812,7 @@ namespace bind {
 #ifndef BIND_CONTAINER_SMART_PTR
 #define BIND_CONTAINER_SMART_PTR
 
-namespace bind {
+namespace bindxx {
 
     using model::any;
     using model::sizeof_any;
@@ -2822,7 +2822,7 @@ namespace bind {
     protected:
         typedef T element_type;
        ~smart_ptr(){
-           if(impl) bind::collect(impl); 
+           if(impl) bindxx::collect(impl); 
         }
         smart_ptr(element_type val){
             impl = new (memory::cpu::standard::calloc<sizeof_any<T>()>()) any(val);
@@ -2877,13 +2877,13 @@ namespace bind {
 #ifndef BIND_CONTAINER_PROXY_ITERATOR
 #define BIND_CONTAINER_PROXY_ITERATOR
 
-namespace bind {
+namespace bindxx {
 
     template<class Container>
     class proxy_iterator {
     public:
         typedef Container container_type;
-        typedef typename std::iterator_traits<bind::proxy_iterator<Container> >::value_type value_type;
+        typedef typename std::iterator_traits<bindxx::proxy_iterator<Container> >::value_type value_type;
 
         proxy_iterator() : container(NULL), position(0) {}
         proxy_iterator(container_type& owner, size_t p) : container(&owner), position(p) {}
@@ -2971,7 +2971,7 @@ namespace bind {
 namespace std {
 
     template<class Container>
-    class iterator_traits<bind::proxy_iterator<Container> > {
+    class iterator_traits<bindxx::proxy_iterator<Container> > {
     public:
         typedef std::random_access_iterator_tag iterator_category;
         typedef typename Container::value_type value_type;
@@ -2979,7 +2979,7 @@ namespace std {
     };
 
     template<class Container>
-    class iterator_traits<bind::proxy_iterator<const Container> > {
+    class iterator_traits<bindxx::proxy_iterator<const Container> > {
     public:
         typedef std::random_access_iterator_tag iterator_category;
         typedef const typename Container::value_type value_type;
@@ -2992,23 +2992,23 @@ namespace std {
 #ifndef BIND_CONTAINER_ARRAY
 #define BIND_CONTAINER_ARRAY
 
-namespace bind {
+namespace bindxx {
 
     // {{{ array helper functions
     template<class T, class Allocator> class array;
     namespace detail {
         template<class T, class Allocator>
-        void fill_array(volatile bind::array<T,Allocator>& a, T& value){
+        void fill_array(volatile bindxx::array<T,Allocator>& a, T& value){
             for(size_t i = 0; i < a.size(); ++i) a[i] = value;
         }
         template<class T, class Allocator, class OtherAllocator = Allocator>
-        void copy_array(volatile bind::array<T,Allocator>& dst, const bind::array<T,OtherAllocator>& src, const size_t& n){
+        void copy_array(volatile bindxx::array<T,Allocator>& dst, const bindxx::array<T,OtherAllocator>& src, const size_t& n){
             for(size_t i = 0; i < n; ++i) dst[i] = src[i];
         }
     }
     // }}}
 
-    template <class T, class Allocator = bind::snapshot>
+    template <class T, class Allocator = bindxx::snapshot>
     class array {
     public:
         void* operator new (size_t size, void* ptr){ return ptr; }
@@ -3035,11 +3035,11 @@ namespace bind {
         array& operator = (const array<T,OtherAllocator>& rhs){
             array resized(rhs.size());
             this->swap(resized);
-            if(!bind::weak(rhs)) bind::cpu(detail::copy_array<T,Allocator,OtherAllocator>, *this, rhs, this->size_);
+            if(!bindxx::weak(rhs)) bindxx::cpu(detail::copy_array<T,Allocator,OtherAllocator>, *this, rhs, this->size_);
             return *this;
         }
         void fill(T value){
-            bind::cpu(detail::fill_array<T,Allocator>, *this, value);
+            bindxx::cpu(detail::fill_array<T,Allocator>, *this, value);
         }
         void swap(array<T,Allocator>& r){
             std::swap(this->size_, r.size_);
@@ -3049,7 +3049,7 @@ namespace bind {
             return size_;
         }
         bool empty() const volatile {
-            return ((size() == 0) || bind::weak(*this));
+            return ((size() == 0) || bindxx::weak(*this));
         }
         value_type* data() volatile {
             return (value_type*)allocator_.data();
@@ -3120,9 +3120,9 @@ namespace bind {
 #ifndef BIND_CONTAINER_BLOCK
 #define BIND_CONTAINER_BLOCK
 
-namespace bind {
+namespace bindxx {
      
-    template<typename T, class Allocator = bind::snapshot> class block;
+    template<typename T, class Allocator = bindxx::snapshot> class block;
     namespace detail { 
         template<typename T>
         void fill_value(volatile block<T>& a, T& value){
@@ -3139,7 +3139,7 @@ namespace bind {
         typedef T value_type;
         block(size_t m, size_t n) : allocator_(sizeof(T)*m*n), rows(m), cols(n) {}
         void init(T value){
-            bind::cpu(detail::fill_value<T>, *this, value);
+            bindxx::cpu(detail::fill_value<T>, *this, value);
         }
         value_type& operator()(size_t i, size_t j){
             return data()[ j*rows + i ];
